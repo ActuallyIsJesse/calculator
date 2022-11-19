@@ -1,5 +1,5 @@
 const display = document.querySelector('#display-p')
-let currendOperand = null;
+let currentOperand = null;
 let displayingResult = true;
 let UserInputA = [];
 let UserInputB = [];
@@ -47,19 +47,19 @@ function pushInput(e) {
             drawDisplay("notCleared");
             break;   
         case "btn-multiply":
-            currendOperand="multiply"
+            currentOperand="multiply"
             applyOperand("multiply");
             break;   
         case "btn-divide":
-            currendOperand="divide"
+            currentOperand="divide"
             applyOperand("divide");
             break;   
         case "btn-subtract":
-            currendOperand="subtract"
+            currentOperand="subtract"
             applyOperand("subtract");
             break;   
         case "btn-add":
-            currendOperand="add"
+            currentOperand="add"
             applyOperand("add");
             break;   
         case "btn-equal":
@@ -104,7 +104,7 @@ function applyOperand(operand) {
 function operate() {
     // Let the record show that I'm embarrassed by this funciton. 
     let result = "Something went wrong if you ever see this."
-    switch(currendOperand){
+    switch(currentOperand){
         case "multiply":
             result = (parseFloat(UserInputB.join(''))) * (parseFloat(UserInputA.join('')));
             break;
@@ -127,10 +127,10 @@ function operate() {
             console.log("oh no");
             result = "oh no";
     }
-    currendOperand = null;
+    currentOperand = null;
     clearArray(UserInputA);
     clearArray(UserInputB);
-    UserInputA[0] = result.toFixed(3).replace(/[.,]000$/, "");
+    UserInputA[0] = result.toFixed(3).replace(".000","");
     drawDisplay()
 }
 
