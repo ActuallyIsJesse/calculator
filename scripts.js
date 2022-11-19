@@ -91,8 +91,6 @@ function drawDisplay(inputBehavior) {
     } else if (inputBehavior === "cleared") {
         display.textContent = "CLEARED";
         setTimeout(() => {display.textContent = "";}, 300)
-    } else if(inputBehavior === "operandInUse"){
-        display.textContent = "";
     }
 
 }
@@ -107,13 +105,21 @@ function applyOperand(operand) {
 
 function operate() {
     // Let the record show that I'm embarrassed by this funciton. 
+    if(UserInputB.length < 1) {
+        console.log("Dummy")
+        clearArray(UserInputA);
+        UserInputA[0] = "DUMMY"
+        drawDisplay("notCleared")
+        return;    
+    }
+
     let result = "Something went wrong if you ever see this."
     switch(currentOperand){
         case "multiply":
             result = (parseFloat(UserInputB.join(''))) * (parseFloat(UserInputA.join('')));
             break;
         case "divide":
-            if(parseFloat(UserInputB.join('')) === 0 && parseFloat(UserInputA.join('')) === 0) {
+            if(parseFloat(UserInputA.join('')) === 0) {
                 clearArray(UserInputA);
                 clearArray(UserInputB);
                 UserInputA[0] = "No";
