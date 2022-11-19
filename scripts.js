@@ -67,7 +67,10 @@ function pushInput(e) {
             drawDisplay("notCleared");
             break;
         case "btn-decimal":
-            UserInputA.push(".");
+            if(!UserInputA.includes(".")){
+                UserInputA.push(".");
+            }
+            drawDisplay("notCleared")
             break;   
         case "btn-clear":
             clearArray(UserInputA);
@@ -154,3 +157,4 @@ document.querySelector("#btn-subtract").addEventListener("click", pushInput);
 document.querySelector("#btn-add").addEventListener("click", pushInput);
 document.querySelector("#btn-clear").addEventListener("click", pushInput);
 document.querySelector("#btn-equal").addEventListener("click", pushInput);
+document.querySelector("#btn-decimal").addEventListener("click", pushInput);
