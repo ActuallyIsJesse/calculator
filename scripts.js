@@ -71,7 +71,7 @@ function pushInput(e) {
             drawDisplay("notCleared");
             break;
         case "btn-decimal":
-            if(!UserInputA.includes(".")){
+            if(!UserInputA.includes(".")){ //Only one decimal, please
                 UserInputA.push(".");
             }
             drawDisplay("notCleared")
@@ -99,7 +99,7 @@ function drawDisplay(inputBehavior) {
 
 }
 
-function applyOperator() {
+function applyOperator() { // This  just shifts user input to the B array. I should probably rename it.
     if(UserInputB.length > 0) {
         operate();
     }
@@ -117,13 +117,13 @@ function operate() {
         return;    
     }
 
-    let result = "Something went wrong if you ever see this."
+    let result = "Something went wrong if you ever see this." // Unless you're reading the source, of course,
     switch(currentOperator){
         case "multiply":
             result = (parseFloat(UserInputB.join(''))) * (parseFloat(UserInputA.join('')));
             break;
         case "divide":
-            if(parseFloat(UserInputA.join('')) === 0) {
+            if(parseFloat(UserInputA.join('')) === 0) { // Don't you dare try to divide by 0, you sicko.
                 clearArray(UserInputA);
                 clearArray(UserInputB);
                 UserInputA[0] = "No";
@@ -138,12 +138,14 @@ function operate() {
             result = (parseFloat(UserInputA.join(''))) + (parseFloat(UserInputB.join('')));
             break;
         default: 
-            result = "oh no";
+            result = "oh no"; // This should never appear, but I sure saw it a lot in debugging...
     }
     currentOperator = null;
     clearArray(UserInputA);
     clearArray(UserInputB);
-    UserInputA[0] = result.toFixed(3).replace(".000","");
+    UserInputA[0] = result.toFixed(3).replace(".000",""); // This input has gone from numbers 
+                                                          // in an array, to a string, to numbers, to 
+                                                          // a string in an array. What a journey.
     drawDisplay()
     displayingResult = true;
 }
