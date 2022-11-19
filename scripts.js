@@ -1,53 +1,55 @@
 const display = document.querySelector('#display-p')
 let currentOperator = null;
 let displayingResult = true;
-let UserInputA = [];
-let UserInputB = [];
+let userInputA = [];
+let userInputB = [];
 
 function pushInput(e) {
     if(displayingResult){
-        clearArray(UserInputA);
+        clearArray(userInputA);
         displayingResult = false;
     }
     switch(e.target.id) {
+        case "1":
+            console.log(e)
         case "btn-0":
-            UserInputA.push(0);
+            userInputA.push(0);
             drawDisplay("notCleared");
             break;
         case "btn-1":
-            UserInputA.push(1);
+            userInputA.push(1);
             drawDisplay("notCleared");
             break;
         case "btn-2":
-            UserInputA.push(2);
+            userInputA.push(2);
             drawDisplay("notCleared");
             break;
         case "btn-3":
-            UserInputA.push(3);
+            userInputA.push(3);
             drawDisplay("notCleared");
             break;
         case "btn-4":
-            UserInputA.push(4);
+            userInputA.push(4);
             drawDisplay("notCleared");
             break;
         case "btn-5":
-            UserInputA.push(5);
+            userInputA.push(5);
             drawDisplay("notCleared");
             break;
         case "btn-6":
-            UserInputA.push(6);
+            userInputA.push(6);
             drawDisplay("notCleared");
             break;
         case "btn-7":
-            UserInputA.push(7);
+            userInputA.push(7);
             drawDisplay("notCleared");
             break;
         case "btn-8":
-            UserInputA.push(8);
+            userInputA.push(8);
             drawDisplay("notCleared");
             break;
         case "btn-9":
-            UserInputA.push(9);
+            userInputA.push(9);
             drawDisplay("notCleared");
             break;   
         case "btn-multiply":
@@ -65,25 +67,28 @@ function pushInput(e) {
         case "btn-add":
             currentOperator="add"
             applyOperator();
-            break;   
+            break;
         case "btn-equal":
             operate();
             drawDisplay("notCleared");
             break;
         case "btn-decimal":
-            if(!UserInputA.includes(".")){ //Only one decimal, please
-                UserInputA.push(".");
+            if(!userInputA.includes(".")){ //Only one decimal, please
+                userInputA.push(".");
             }
             drawDisplay("notCleared")
             break;   
         case "btn-clear":
-            clearArray(UserInputA);
-            clearArray(UserInputB);
+            clearArray(userInputA);
+            clearArray(userInputB);
             drawDisplay("cleared");
             return;
         case "btn-back":
-            UserInputA.pop();
+            userInputA.pop();
             drawDisplay("notCleared");
+            return;
+        default:
+            console.log("You entered somethign weird");
             return;
     }
 
@@ -91,7 +96,7 @@ function pushInput(e) {
 
 function drawDisplay(inputBehavior) {
     if(inputBehavior === "notCleared"){ 
-    display.textContent = UserInputA.join("");
+    display.textContent = userInputA.join("");
     } else if (inputBehavior === "cleared") {
         display.textContent = "CLEARED";
         setTimeout(() => {display.textContent = "";}, 300)
@@ -100,50 +105,54 @@ function drawDisplay(inputBehavior) {
 }
 
 function applyOperator() { // This  just shifts user input to the B array. I should probably rename it.
-    if(UserInputB.length > 0) {
+    if(userInputB.length > 0) {
         operate();
     }
-    UserInputB = [...UserInputA];
-    clearArray(UserInputA);
+    userInputB = [...userInputA];
+    clearArray(userInputA);
 }
 
 function operate() {
     // Let the record show that I'm embarrassed by this funciton. 
-    if(UserInputB.length < 1) {
+    if(userInputB.length < 1) {
         console.log("Dummy")
-        clearArray(UserInputA);
-        UserInputA[0] = "DUMMY"
+        clearArray(userInputA);
+        userInputA[0] = "DUMMY"
         drawDisplay("notCleared")
+        setTimeout(() => {
+            drawDisplay("cleared");
+            clearArray(userInputA);
+        }, 500);
         return;    
     }
 
     let result = "Something went wrong if you ever see this." // Unless you're reading the source, of course,
     switch(currentOperator){
         case "multiply":
-            result = (parseFloat(UserInputB.join(''))) * (parseFloat(UserInputA.join('')));
+            result = (parseFloat(userInputB.join(''))) * (parseFloat(userInputA.join('')));
             break;
         case "divide":
-            if(parseFloat(UserInputA.join('')) === 0) { // Don't you dare try to divide by 0, you sicko.
-                clearArray(UserInputA);
-                clearArray(UserInputB);
-                UserInputA[0] = "No";
+            if(parseFloat(userInputA.join('')) === 0) { // Don't you dare try to divide by 0, you sicko.
+                clearArray(userInputA);
+                clearArray(userInputB);
+                userInputA[0] = "No";
                 return;
             }
-            result = (parseFloat(UserInputB.join(''))) / (parseFloat(UserInputA.join('')));
+            result = (parseFloat(userInputB.join(''))) / (parseFloat(userInputA.join('')));
             break;
         case "subtract":
-            result = (parseFloat(UserInputB.join(''))) - (parseFloat(UserInputA.join('')));
+            result = (parseFloat(userInputB.join(''))) - (parseFloat(userInputA.join('')));
             break;
         case "add":
-            result = (parseFloat(UserInputA.join(''))) + (parseFloat(UserInputB.join('')));
+            result = (parseFloat(userInputA.join(''))) + (parseFloat(userInputB.join('')));
             break;
         default: 
             result = "oh no"; // This should never appear, but I sure saw it a lot in debugging...
     }
     currentOperator = null;
-    clearArray(UserInputA);
-    clearArray(UserInputB);
-    UserInputA[0] = result.toFixed(3).replace(".000",""); // This input has gone from numbers 
+    clearArray(userInputA);
+    clearArray(userInputB);
+    userInputA[0] = result.toFixed(3).replace(".000",""); // This input has gone from numbers 
                                                           // in an array, to a string, to numbers, to 
                                                           // a string in an array. What a journey.
     drawDisplay()
@@ -175,3 +184,35 @@ document.querySelector("#btn-clear").addEventListener("click", pushInput);
 document.querySelector("#btn-equal").addEventListener("click", pushInput);
 document.querySelector("#btn-decimal").addEventListener("click", pushInput);
 document.querySelector("#btn-back").addEventListener("click", pushInput);
+document.querySelector("body").addEventListener("keydown", event => {
+    console.log(event.key);
+    let e = {};
+    e.target = {};
+    switch(event.key) {
+        case "=":
+        case "Enter":
+            e.target.id = `btn-equal`;
+            break;
+        case "*":
+            e.target.id = `btn-multiply`;
+            break;
+        case "/":
+            e.target.id = `btn-divide`;
+            break;
+        case "-":
+            e.target.id = `btn-subtract`; 
+            break;
+        case "+":
+            e.target.id = `btn-add`;
+            break;
+        case "Escape":
+            e.target.id = `btn-clear`;
+            break;
+        case "Backspace":
+            e.target.id = `btn-back`;
+            break;
+        default:
+            e.target.id = `btn-${event.key}`;
+            break;
+    }
+    pushInput(e)});
