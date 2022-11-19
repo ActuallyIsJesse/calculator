@@ -56,13 +56,21 @@ button:active {
     gap: 2px;
 }
 
+button.operator {
+    background-color: #faf0ed;
+}
+
+button.operator:hover {
+    background-color: #f9e2db;
+}
+
 #display-p {
     font-size: 24px;
     height: 28px;
 }
 
 #btn-clear {
-    grid-column-end: span 3;
+    grid-column-end: span 2;
 }
 
 #btn-0 {

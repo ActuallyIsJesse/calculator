@@ -1,5 +1,5 @@
 const display = document.querySelector('#display-p')
-let currentOperand = null;
+let currentOperator = null;
 let displayingResult = true;
 let UserInputA = [];
 let UserInputB = [];
@@ -51,20 +51,20 @@ function pushInput(e) {
             drawDisplay("notCleared");
             break;   
         case "btn-multiply":
-            currentOperand="multiply"
-            applyOperand("multiply");
+            currentOperator="multiply"
+            applyOperator();
             break;   
         case "btn-divide":
-            currentOperand="divide"
-            applyOperand("divide");
+            currentOperator="divide"
+            applyOperator();
             break;   
         case "btn-subtract":
-            currentOperand="subtract"
-            applyOperand("subtract");
+            currentOperator="subtract"
+            applyOperator();
             break;   
         case "btn-add":
-            currentOperand="add"
-            applyOperand("add");
+            currentOperator="add"
+            applyOperator();
             break;   
         case "btn-equal":
             operate();
@@ -81,6 +81,10 @@ function pushInput(e) {
             clearArray(UserInputB);
             drawDisplay("cleared");
             return;
+        case "btn-back":
+            UserInputA.pop();
+            drawDisplay("notCleared");
+            return;
     }
 
 }
@@ -95,7 +99,7 @@ function drawDisplay(inputBehavior) {
 
 }
 
-function applyOperand(operand) {
+function applyOperator() {
     if(UserInputB.length > 0) {
         operate();
     }
@@ -114,7 +118,7 @@ function operate() {
     }
 
     let result = "Something went wrong if you ever see this."
-    switch(currentOperand){
+    switch(currentOperator){
         case "multiply":
             result = (parseFloat(UserInputB.join(''))) * (parseFloat(UserInputA.join('')));
             break;
@@ -136,7 +140,7 @@ function operate() {
         default: 
             result = "oh no";
     }
-    currentOperand = null;
+    currentOperator = null;
     clearArray(UserInputA);
     clearArray(UserInputB);
     UserInputA[0] = result.toFixed(3).replace(".000","");
@@ -168,3 +172,4 @@ document.querySelector("#btn-add").addEventListener("click", pushInput);
 document.querySelector("#btn-clear").addEventListener("click", pushInput);
 document.querySelector("#btn-equal").addEventListener("click", pushInput);
 document.querySelector("#btn-decimal").addEventListener("click", pushInput);
+document.querySelector("#btn-back").addEventListener("click", pushInput);
