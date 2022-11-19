@@ -5,6 +5,10 @@ let UserInputA = [];
 let UserInputB = [];
 
 function pushInput(e) {
+    if(displayingResult){
+        clearArray(UserInputA);
+        displayingResult = false;
+    }
     switch(e.target.id) {
         case "btn-0":
             UserInputA.push(0);
@@ -124,7 +128,6 @@ function operate() {
             result = (parseFloat(UserInputA.join(''))) + (parseFloat(UserInputB.join('')));
             break;
         default: 
-            console.log("oh no");
             result = "oh no";
     }
     currentOperand = null;
@@ -132,6 +135,7 @@ function operate() {
     clearArray(UserInputB);
     UserInputA[0] = result.toFixed(3).replace(".000","");
     drawDisplay()
+    displayingResult = true;
 }
 
 function clearArray(input) {
