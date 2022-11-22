@@ -36,7 +36,8 @@ function getUserInput(event) {
 }
 
 function concatinateInput(targetID) {
-    console.log(`targetID is ${targetID}`);
+    currentInput += targetID;
+    console.log(currentInput);
 } 
 //Add event listeners to all buttons and keyboard input
 buttons.forEach(button => {
