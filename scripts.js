@@ -46,14 +46,14 @@ function concatinateInput(targetID) {
 
 function backspaceInput() {
     currentInput = currentInput.slice(0,-1);
-    updateDisplay()
+    updateDisplay();
 }
 
 function clearInput() {
-    currentInput = "CLEARED"
-    updateDisplay()
-    currentInput = ""
-    setTimeout(updateDisplay, 300);
+    currentInput = "CLEARED";
+    updateDisplay();
+    currentInput = "";
+    setTimeout(() => {display.textContent = "WELCOME"},300);
 }
    
 function updateDisplay() {
@@ -62,6 +62,6 @@ function updateDisplay() {
 
 //Add event listeners to all buttons and keyboard input
 buttons.forEach(button => {
-   button.addEventListener('click', getUserInput)
+   button.addEventListener('click', getUserInput);
 });
 document.querySelector("body").addEventListener("keydown", getUserInput);
