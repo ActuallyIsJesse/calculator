@@ -15,6 +15,7 @@ function getUserInput(event) {
         7: () => {concatinateInput(7)},
         8: () => {concatinateInput(8)},
         9: () => {concatinateInput(9)},
+        "*": () => {multiply()},
         Backspace: () => {backspaceInput()},
         Escape: () => {clearInput()},
         "btn-0": () => {concatinateInput(0)}, 
@@ -27,8 +28,9 @@ function getUserInput(event) {
         "btn-7": () => {concatinateInput(7)},
         "btn-8": () => {concatinateInput(8)},
         "btn-9": () => {concatinateInput(9)},
-        "backspace-btn": () => {backspaceInput()},
-        "escape-btn": () => {clearInput()},
+        "btn-multiply": () => {multiply()},
+        "btn-backspace": () => {backspaceInput()},
+        "btn-escape": () => {clearInput()},
         "other": () => {console.log("Dummy")},
     }
 
@@ -58,6 +60,20 @@ function clearInput() {
    
 function updateDisplay() {
     display.textContent = currentInput;
+}
+
+function multiply() {
+    console.log("Made it!")
+    if (storedInput.length = 0) {
+        storedInput = currentInput;
+        currentInput = "";
+        updateDisplay();
+    } else {
+        storedInput = currentInput * storedInput;
+        currentInput = "";
+        updateDisplay();
+        multiply();
+    }
 }
 
 //Add event listeners to all buttons and keyboard input
