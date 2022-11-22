@@ -69,7 +69,7 @@ button.operator:hover {
     height: 28px;
 }
 
-#escape-btn {
+#btn-escape {
     grid-column-end: span 2;
 }
 
